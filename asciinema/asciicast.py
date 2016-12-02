@@ -104,13 +104,18 @@ def load(filename):
         if type(attrs) != dict:
             raise LoadError('unsupported asciicast format')
 
+        stdout = Stdout
+        stdout.frames = attrs['stdout']
+
         return Asciicast(
-            attrs['stdout'],
+            stdout,
             attrs['width'],
             attrs['height'],
             attrs['duration'],
             attrs['command'],
-            attrs['title']
+            attrs['title'],
+            attrs['env']['TERM'],
+            attrs['env']['SHELL']
         )
     except (OSError, urllib.error.HTTPError) as e:
         raise LoadError(str(e))
