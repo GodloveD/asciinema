@@ -3,7 +3,6 @@ import re
 from itertools import accumulate
 import .asciicast
 
-
 def __parse_clip__(asciicast, clip_spec=None):
 
     if clip_spec is None: clip_spec = ''
