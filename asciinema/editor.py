@@ -1,7 +1,7 @@
 import sys
 import re
 from itertools import accumulate
-import .asciicast
+from .asciicast import Asciicast
 
 def __parse_clip__(asciicast, clip_spec=None):
 
@@ -96,11 +96,3 @@ def __parse_time__(timestring):
     seconds = float(hr)*3600 + float(mn)*60 + float(sc)
     return seconds
 
-
-infile   = sys.argv[1]
-outfile  = sys.argv[2]
-max_time = float(sys.argv[3])
-clip     = sys.argv[4]
-asciicast = asciicast.load(infile)
-asciicast = new_max(asciicast, max_time, clip)
-asciicast.save(outfile)
