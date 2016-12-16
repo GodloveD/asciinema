@@ -10,3 +10,4 @@ clip    = ':'
 asciicast = load(ifile)
 asciicast = editor.new_min(asciicast, new_min)
 asciicast.save(ofile)
+# dummy commit for travis test
