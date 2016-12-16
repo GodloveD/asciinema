@@ -5,23 +5,26 @@ from .asciicast import Asciicast
 
 def __parse_clip__(asciicast, clip_spec=None):
 
-    if clip_spec is None: clip_spec = ''
+
+    if clip_spec is None:
+        clip_spec = ''
     'parse clip_spec to see if it is time or frames'
     ''' Do error checking
     : = everything
     5:100 = frame 5 to 100
     5: = frame 5 to end
     :100 = frame start to 100
-    0:10, =  10 seconds to end 
+    0:10, =  10 seconds to end
     ,0:30 =  start to 30 seconds
     1:20:20.511,1:21:0.5 = hr:minute:seconds.fraction to hr:minute:seconds.fraction
-    1:00,2 = illegal. one minute to 2 seconds 
+    1:00,2 = illegal. one minute to 2 seconds
     if start >= stop:
         print('NO!')
         return 1
     '''
 
-    start = 0; fin = 1
+    start = 0
+    fin = 1
     time = list(accumulate([a[0] for a in asciicast.stdout.frames]))
 
     if ',' in clip_spec:
@@ -29,19 +32,22 @@ def __parse_clip__(asciicast, clip_spec=None):
         clip_spec = [__parse_time__(a) for a in clip_spec]
 
         if isinstance(clip_spec[start], float):
-            clip_spec[start] = next(i for i,t in enumerate(time) if t >= clip_spec[start]) +1
+            clip_spec[start] = next(i for i, t in enumerate(time) if t >= clip_spec[start]) + 1
         if isinstance(clip_spec[fin], float):
-            clip_spec[fin] = next(i for i,t in enumerate(time) if t > clip_spec[fin])
+            clip_spec[fin] = next(i for i, t in enumerate(time) if t > clip_spec[fin])
 
-        clip_spec = "%s:%s"%(str(clip_spec[start]), str(clip_spec[fin]))
+        clip_spec = "%s:%s" %(str(clip_spec[start]), str(clip_spec[fin]))
 
     clip_spec = re.split(':', clip_spec)
 
-    if clip_spec[start] is '':  clip_spec[start] = start
+    if clip_spec[start] is '':
+        clip_spec[start] = start
     
     frameN = len(asciicast.stdout.frames) - 1
-    if len(clip_spec) == 1: clip_spec.append(frameN) 
-    if clip_spec[fin] is '':  clip_spec[fin] = frameN
+    if len(clip_spec) == 1:
+        clip_spec.append(frameN) 
+    if clip_spec[fin] is '':
+        clip_spec[fin] = frameN
 
     clip = slice(int(clip_spec[start]), int(clip_spec[fin]))
     return clip
