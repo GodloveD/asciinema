@@ -24,8 +24,8 @@ def __parse_clip__(asciicast, clip_spec=None):
     '''
 
     start = 0
-    fin   = 1
-    time  = list(accumulate([a[0] for a in asciicast.stdout.frames]))
+    fin = 1
+    time = list(accumulate([a[0] for a in asciicast.stdout.frames]))
 
     if ',' in clip_spec:
         clip_spec = re.split(',', clip_spec)
@@ -36,7 +36,7 @@ def __parse_clip__(asciicast, clip_spec=None):
         if isinstance(clip_spec[fin], float):
             clip_spec[fin] = next(i for i, t in enumerate(time) if t > clip_spec[fin])
 
-        clip_spec = "%s:%s" %(str(clip_spec[start]), str(clip_spec[fin]))
+        clip_spec = "%s:%s" % (str(clip_spec[start]), str(clip_spec[fin]))
 
     clip_spec = re.split(':', clip_spec)
 
@@ -90,24 +90,25 @@ def __parse_time__(timestring):
     match = re.split(":", timestring)
 
     if len(match) == 3:
-        hr = match[0];
-        mn = match[1];
+        hr = match[0]
+        mn = match[1]
         sc = match[2]
 
     elif len(match) == 2:
-        hr = 0;
-        mn = match[0];
+        hr = 0
+        mn = match[0]
         sc = match[1]
 
     elif len(match) == 1:
-        hr = 0;
-        mn = 0;
+        hr = 0
+        mn = 0
         sc = match[0]
 
     else:
         'Error bad clip spec'
 
-    if sc is '': return ''
+    if sc is '':
+        return ''
+
     seconds = float(hr) * 3600 + float(mn) * 60 + float(sc)
     return seconds
-
