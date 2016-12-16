@@ -3,8 +3,8 @@ import re
 from itertools import accumulate
 from .asciicast import Asciicast
 
-def __parse_clip__(asciicast, clip_spec=None):
 
+def __parse_clip__(asciicast, clip_spec=None):
 
     if clip_spec is None:
         clip_spec = ''
@@ -24,8 +24,8 @@ def __parse_clip__(asciicast, clip_spec=None):
     '''
 
     start = 0
-    fin = 1
-    time = list(accumulate([a[0] for a in asciicast.stdout.frames]))
+    fin   = 1
+    time  = list(accumulate([a[0] for a in asciicast.stdout.frames]))
 
     if ',' in clip_spec:
         clip_spec = re.split(',', clip_spec)
@@ -42,10 +42,10 @@ def __parse_clip__(asciicast, clip_spec=None):
 
     if clip_spec[start] is '':
         clip_spec[start] = start
-    
+
     frameN = len(asciicast.stdout.frames) - 1
     if len(clip_spec) == 1:
-        clip_spec.append(frameN) 
+        clip_spec.append(frameN)
     if clip_spec[fin] is '':
         clip_spec[fin] = frameN
 
@@ -64,7 +64,7 @@ def new_max(asciicast, max_time, clip=None):
         if this_pause > max_time:
             this_echo[0] = max_time
             diff = diff + this_pause - max_time
-            
+
     asciicast.duration = asciicast.duration - diff
     return asciicast
 
@@ -80,7 +80,7 @@ def new_min(asciicast, min_time, clip=None):
         if this_pause < min_time:
             this_echo[0] = min_time
             diff = diff + min_time - this_pause
-            
+
     asciicast.duration = asciicast.duration + diff
     return asciicast
 
@@ -90,15 +90,24 @@ def __parse_time__(timestring):
     match = re.split(":", timestring)
 
     if len(match) == 3:
-        hr = match[0]; mn = match[1]; sc = match[2]
+        hr = match[0];
+        mn = match[1];
+        sc = match[2]
+
     elif len(match) == 2:
-        hr = 0; mn = match[0]; sc = match[1]
+        hr = 0;
+        mn = match[0];
+        sc = match[1]
+
     elif len(match) == 1:
-        hr = 0; mn = 0; sc = match[0]
+        hr = 0;
+        mn = 0;
+        sc = match[0]
+
     else:
         'Error bad clip spec'
 
     if sc is '': return ''
-    seconds = float(hr)*3600 + float(mn)*60 + float(sc)
+    seconds = float(hr) * 3600 + float(mn) * 60 + float(sc)
     return seconds
 
