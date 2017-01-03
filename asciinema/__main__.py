@@ -9,6 +9,7 @@ from asciinema.commands.auth import AuthCommand
 from asciinema.commands.record import RecordCommand
 from asciinema.commands.play import PlayCommand
 from asciinema.commands.upload import UploadCommand
+from asciinema.commands.edit import EditCommand
 from asciinema.api import Api
 
 
@@ -36,6 +37,10 @@ def upload_command(args, config):
 
 def auth_command(args, config):
     return AuthCommand(config.api_url, config.api_token)
+
+
+def edit_command(args, config):
+    return EditCommand(args.infile, args.outfile, args.time_spec, args.clip)
 
 
 def maybe_str(v):
@@ -99,6 +104,13 @@ For help on a specific command run:
     # create the parser for the "auth" command
     parser_auth = subparsers.add_parser('auth', help='Manage recordings on asciinema.org account')
     parser_auth.set_defaults(func=auth_command)
+    
+    # create the parser for the "edit" command
+    parser_edit = subparsers.add_parser('edit', help='Edit an asciicast and save it as a new asciicast')
+    parser_edit.add_argument('infile', help='')
+    parser_edit.add_argument('outfile', help='')
+    parser_edit.add_argument('time_spec', help='')
+    parser_edit.add_argument('clip', help='')
 
     # parse the args and call whatever function was selected
     args = parser.parse_args()

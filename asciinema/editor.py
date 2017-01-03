@@ -53,7 +53,7 @@ def __parse_clip__(asciicast, clip_spec=None):
     return clip
 
 
-def new_max(asciicast, max_time, clip=None):
+def new_max(asciicast, max_time, clip=None, outfile=None):
 
     clip = __parse_clip__(asciicast, clip)
 
@@ -69,7 +69,7 @@ def new_max(asciicast, max_time, clip=None):
     return asciicast
 
 
-def new_min(asciicast, min_time, clip=None):
+def new_min(asciicast, min_time, clip=None, outfile=None):
 
     clip = __parse_clip__(asciicast, clip)
 
